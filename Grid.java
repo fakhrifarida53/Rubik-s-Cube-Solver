@@ -1,3 +1,11 @@
+/**
+* Heart of the application, home of the virtual Rubik's Cube.
+*
+* @author  Edgardo Gutierrez Jr.
+* @version 1.0
+* @since   2015-11-19
+*/
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,25 +20,20 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.LinkedList;
 import java.lang.Thread;
-
-
-
-
 import javax.swing.JPanel;
-
 
 @SuppressWarnings("serial")
 public class Grid extends JPanel implements KeyListener, MouseListener, MouseMotionListener {
 
 	private static final int WIDTH = 500;
 	private static final int HEIGHT = 500;
-	private boolean right, left, up, down, shift, invert, edit, menu, scrollUp, scrollDown, 
+	private boolean right, left, up, down, shift, invert, edit, menu, scrollUp, scrollDown,
 		runninng, auto, solved, turnReady, impossibleCube;
-	
+
 	private Cube myCube, mySolvingCube;
 	private double myStep, myScrollX, myScrollStep;
 	private int myDimensions, myDragX, myDragY, mySolutionX, mySolutionY, myMoveIndex;;
-	
+
 	public Grid() {
 		this.setFocusable(true);
 		this.requestFocus();
@@ -42,7 +45,7 @@ public class Grid extends JPanel implements KeyListener, MouseListener, MouseMot
         init();
 		this.repaint();
 	}
-	
+
 	private void init() {
 		right = false;
 		left = false;
@@ -70,7 +73,7 @@ public class Grid extends JPanel implements KeyListener, MouseListener, MouseMot
 		myCube = new Cube(WIDTH, HEIGHT, myStep, 1, myDimensions, false);
 		mySolvingCube = myCube.copy();
 	}
-	
+
 	@Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -143,7 +146,7 @@ public class Grid extends JPanel implements KeyListener, MouseListener, MouseMot
 			drawMenu(g2d);
 		}
     }
-	
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
@@ -175,7 +178,7 @@ public class Grid extends JPanel implements KeyListener, MouseListener, MouseMot
 				if (shift) myCube.rotateCounterClockwise();
 				else if (!invert) myCube.rotateRight();
 				else if (invert) myCube.rotateLeft();
-				
+
 			} else if (key == 40) {
 				down = true;
 				if (shift) myCube.scale("down");
@@ -249,7 +252,6 @@ public class Grid extends JPanel implements KeyListener, MouseListener, MouseMot
 				myCube.scale("down");
 			}
 
-
 			myScrollX = 0 ;
 			mySolvingCube.resetMoves();
 
@@ -266,7 +268,6 @@ public class Grid extends JPanel implements KeyListener, MouseListener, MouseMot
 
 		}
 	}
-
 
 	private void solveStressTest() {
 		myCube = new Cube(WIDTH, HEIGHT, myStep, 1, myDimensions, false);
@@ -410,10 +411,10 @@ public class Grid extends JPanel implements KeyListener, MouseListener, MouseMot
 	private void scrollThroughSolution(Graphics2D g2d) {
 		int fontSize = 12;
 
-		
+
 
 		int upperBound = mySolvingCube.getMoves().size();
-		
+
 		int stringX;
 		int midPoint = WIDTH / 2 - 20;
 		int start = mySolutionX + 55;
@@ -436,7 +437,7 @@ public class Grid extends JPanel implements KeyListener, MouseListener, MouseMot
 
 			g2d.setFont(new Font("Aurora Cn BT", Font.PLAIN, fontSize));
 			g2d.drawString(s, stringX, mySolutionY);
-			
+
 		}
 		g2d.setFont(new Font("Aurora Cn BT", Font.PLAIN, 15));
 		g2d.setColor(Color.BLACK);
@@ -514,7 +515,7 @@ public class Grid extends JPanel implements KeyListener, MouseListener, MouseMot
 			if (e.getKeyCode() == 39) right = false;
 			if (e.getKeyCode() == 40) down = false;
 			if (e.getKeyCode() == 16) shift = false;
-		}	
+		}
 		this.repaint();
 	}
 
@@ -529,7 +530,7 @@ public class Grid extends JPanel implements KeyListener, MouseListener, MouseMot
 		}
 		if (arg0.getX() > WIDTH / 2 - 15 && arg0.getX() < WIDTH / 2 + 15) {
 			if (arg0.getY() > mySolutionY + 20 && arg0.getY() < mySolutionY + 50) {
-				if (mySolvingCube.getMoves().size() > 0 
+				if (mySolvingCube.getMoves().size() > 0
 					&& mySolvingCube.getPercentSolved() == 100) auto = !auto;
 			}
 		}
@@ -550,16 +551,13 @@ public class Grid extends JPanel implements KeyListener, MouseListener, MouseMot
 	public void mouseExited(MouseEvent arg0) {}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
-
-		
-	}
+	public void mousePressed(MouseEvent arg0) {}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		myDragX = 0;
 		myDragY = 0;
-	}	
+	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {

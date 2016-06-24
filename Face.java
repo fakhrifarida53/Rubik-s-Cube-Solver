@@ -1,3 +1,11 @@
+/**
+* Face object representing the stickers on a real Rubik's Cube.
+*
+* @author  Edgardo Gutierrez Jr.
+* @version 1.0
+* @since   2015-11-19
+*/
+
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
@@ -16,7 +24,7 @@ public class Face implements Comparable<Face> {
 	private Polygon myPolygon;
 	private Polygon mySmallPolygon;
 
-	public Face(Color theColor, Point3D[] thePoints, int theWidth, int theHeight, 
+	public Face(Color theColor, Point3D[] thePoints, int theWidth, int theHeight,
 		double theScale) {
 		myColor = theColor;
 		myPoints = thePoints;
@@ -24,32 +32,32 @@ public class Face implements Comparable<Face> {
 		myHeight = theHeight;
 		myScale = theScale;
 	}
-	
+
 	private void setupPolygon() {
-		int myXs[] = new int[4];		
-		myXs[0] = ((myWidth / 2) + (int) (myScale * myPoints[0].getX())); 
-		myXs[1] = ((myWidth / 2) + (int) (myScale * myPoints[1].getX())); 
-		myXs[2] = ((myWidth / 2) + (int) (myScale * myPoints[2].getX())); 
-		myXs[3] = ((myWidth / 2) + (int) (myScale * myPoints[3].getX())); 
-		
+		int myXs[] = new int[4];
+		myXs[0] = ((myWidth / 2) + (int) (myScale * myPoints[0].getX()));
+		myXs[1] = ((myWidth / 2) + (int) (myScale * myPoints[1].getX()));
+		myXs[2] = ((myWidth / 2) + (int) (myScale * myPoints[2].getX()));
+		myXs[3] = ((myWidth / 2) + (int) (myScale * myPoints[3].getX()));
+
 		int myYs[] = new int[4];
 		myYs[0] = (myHeight / 2) + (int)(myScale * -myPoints[0].getY());
 		myYs[1] = (myHeight / 2) + (int)(myScale * -myPoints[1].getY());
 		myYs[2] = (myHeight / 2) + (int)(myScale * -myPoints[2].getY());
 		myYs[3] = (myHeight / 2) + (int)(myScale * -myPoints[3].getY());
-		
+
 
 		// Artificial Depth perception
 		for (int i = 0; i < 4; i++) {
 			if (myPoints[i].getY() > 0) {
 				myYs[i] -= myScale * (myPoints[i].getZ() * myPoints[i].getY()) * 0.002;
-			} 
+			}
 			if (myPoints[i].getY() < 0) {
 				myYs[i] += myScale * (myPoints[i].getZ() * myPoints[i].getY()) * -0.002;
 			}
 			if (myPoints[i].getX() > 0) {
 				myXs[i] -= myScale * (myPoints[i].getZ() * myPoints[i].getX()) * -0.002;
-			} 
+			}
 			if (myPoints[i].getX() < 0) {
 				myXs[i] += myScale * (myPoints[i].getZ() * myPoints[i].getX()) * 0.002;
 			}
@@ -62,16 +70,16 @@ public class Face implements Comparable<Face> {
 		Point3D[] mySmallPoints = new Point3D[4];
 
 		for (int i = 0; i < 4; i++) {
-			mySmallPoints[i] = new Point3D(myPoints[i].getX(), 
+			mySmallPoints[i] = new Point3D(myPoints[i].getX(),
 				myPoints[i].getY(), myPoints[i].getZ());
 		}
 
-		int myXs[] = new int[4];	
-		myXs[0] = ((7 * myWidth / 8) + (int) (0.25 * mySmallPoints[0].getX())); 
-		myXs[1] = ((7 * myWidth / 8) + (int) (0.25 * mySmallPoints[1].getX())); 
-		myXs[2] = ((7 * myWidth / 8) + (int) (0.25 * mySmallPoints[2].getX())); 
-		myXs[3] = ((7 * myWidth / 8) + (int) (0.25 * mySmallPoints[3].getX())); 
-		
+		int myXs[] = new int[4];
+		myXs[0] = ((7 * myWidth / 8) + (int) (0.25 * mySmallPoints[0].getX()));
+		myXs[1] = ((7 * myWidth / 8) + (int) (0.25 * mySmallPoints[1].getX()));
+		myXs[2] = ((7 * myWidth / 8) + (int) (0.25 * mySmallPoints[2].getX()));
+		myXs[3] = ((7 * myWidth / 8) + (int) (0.25 * mySmallPoints[3].getX()));
+
 		int myYs[] = new int[4];
 		myYs[0] = (1 * myWidth / 8) + (int)(0.25 * -mySmallPoints[0].getY());
 		myYs[1] = (1 * myWidth / 8) + (int)(0.25 * -mySmallPoints[1].getY());
@@ -82,13 +90,13 @@ public class Face implements Comparable<Face> {
 		for (int i = 0; i < 4; i++) {
 			if (mySmallPoints[i].getY() > 0) {
 				myYs[i] -= 0.25 * (mySmallPoints[i].getZ() * mySmallPoints[i].getY()) * 0.002;
-			} 
+			}
 			if (mySmallPoints[i].getY() < 0) {
 				myYs[i] += 0.25 * (mySmallPoints[i].getZ() * mySmallPoints[i].getY()) * -0.002;
 			}
 			if (mySmallPoints[i].getX() > 0) {
 				myXs[i] -= 0.25 * (mySmallPoints[i].getZ() * mySmallPoints[i].getX()) * -0.002;
-			} 
+			}
 			if (mySmallPoints[i].getX() < 0) {
 				myXs[i] += 0.25 * (mySmallPoints[i].getZ() * mySmallPoints[i].getX()) * 0.002;
 			}
@@ -99,7 +107,7 @@ public class Face implements Comparable<Face> {
 	public void draw(Graphics2D g, boolean theSmall) {
 		if (theSmall) {
 			setupSmallPolygon();
-			g.setPaint(new GradientPaint(mySmallPolygon.xpoints[1], mySmallPolygon.ypoints[1], 
+			g.setPaint(new GradientPaint(mySmallPolygon.xpoints[1], mySmallPolygon.ypoints[1],
 				myColor, mySmallPolygon.xpoints[0], mySmallPolygon.ypoints[0], Color.DARK_GRAY));
 			g.fillPolygon(mySmallPolygon);
 	        g.setColor(myColor);
@@ -107,18 +115,18 @@ public class Face implements Comparable<Face> {
 		} else {
 			setupPolygon();
 			g.setPaintMode();
-			g.setPaint(new GradientPaint(myPolygon.xpoints[1], myPolygon.ypoints[1], 
+			g.setPaint(new GradientPaint(myPolygon.xpoints[1], myPolygon.ypoints[1],
 				myColor, myPolygon.xpoints[0], myPolygon.ypoints[0], Color.DARK_GRAY));
 			g.fillPolygon(myPolygon);
 	        g.setColor(myColor);
 			g.drawPolygon(myPolygon);
 		}
 	}
-	
+
 	public void setColor(Color theColor) {
 		myColor = theColor;
 	}
-	
+
 	public int getColorInt() {
 		if (myColor.equals(Color.WHITE)) {
 			return 0;
@@ -139,7 +147,7 @@ public class Face implements Comparable<Face> {
 	public Color getColor() {
 		return myColor;
 	}
-	
+
 	public void select() {
 		if (myColor.equals(Color.WHITE)) myColor = Color.RED;
 		else if (myColor.equals(Color.RED)) myColor = BLUE;
@@ -153,7 +161,7 @@ public class Face implements Comparable<Face> {
 		setupPolygon();
 		return myPolygon.contains(theX, theY);
 	}
-	
+
 	public double getAbsoluteZ() {
 		double total = 0.0;
 		for (Point3D point : myPoints) {
@@ -161,7 +169,7 @@ public class Face implements Comparable<Face> {
 		}
 		return total;
 	}
-	
+
 	public void scale(String theScaling) {
 		if (theScaling.equals("up")) {
 			if (myScale < 1.5) myScale += 0.05;

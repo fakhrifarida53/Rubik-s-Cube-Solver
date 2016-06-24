@@ -1,3 +1,11 @@
+/**
+* Tool used to solve different parts of a Cube object.
+*
+* @author  Edgardo Gutierrez Jr.
+* @version 1.0
+* @since   2015-11-19
+*/
+
 import java.util.LinkedList;
 
 public class CubeSolver {
@@ -6,9 +14,9 @@ public class CubeSolver {
 		Face[][][]  tempFace = theCube.getFaces();
 		// W:0, R:1, B:2, O:3, G:4, Y:5
 		// While the white cross does not exist.
-		while (!(tempFace[0][0][1].getColorInt() == 0 
+		while (!(tempFace[0][0][1].getColorInt() == 0
 			&& tempFace[0][1][0].getColorInt() == 0
-			&& tempFace[0][1][2].getColorInt() == 0 
+			&& tempFace[0][1][2].getColorInt() == 0
 			&& tempFace[0][2][1].getColorInt() == 0)) {
 			if (impossibleCount == 50) {
 				System.out.println("solveWhiteCross() -- FAIL");
@@ -22,80 +30,80 @@ public class CubeSolver {
 					// Check for white on right edge
 					if (tempFace[face][1][0].getColorInt() == 0) {
 						if (openWhite(theCube, 1, 0)) theCube.turn(4, true);
-					}					
+					}
 					// Check for white on left edge
 					else if (tempFace[face][1][2].getColorInt() == 0) {
 						if (openWhite(theCube, 1, 2)) theCube.turn(2, false);
 					} // Check for white on top edge
 					else if (tempFace[face][0][1].getColorInt() == 0) {
 						theCube.turn(face, true);
-						theCube.turn(4, true);						
+						theCube.turn(4, true);
 						theCube.turn(face, false);
 					} // Check for white on bottom edge
 					else if (tempFace[face][2][1].getColorInt() == 0) {
 						theCube.turn(face, false);
-						theCube.turn(4, true);						
+						theCube.turn(4, true);
 						theCube.turn(face, true);
 					}
-					
+
 				} else if (face == 2) { // Blue Face
 					// Check for white on right edge
 					if (tempFace[face][1][0].getColorInt() == 0) {
 						if (openWhite(theCube, 2, 1)) theCube.turn(1, true);
-					} 
+					}
 					// Check for white on left edge
 					else if (tempFace[face][1][2].getColorInt() == 0) {
 						if (openWhite(theCube, 0, 1)) theCube.turn(3, false);
 					} // Check for white on top edge
 					else if (tempFace[face][0][1].getColorInt() == 0) {
 						theCube.turn(face, true);
-						theCube.turn(1, true);						
+						theCube.turn(1, true);
 						theCube.turn(face, false);
 					} // Check for white on bottom edge
 					else if (tempFace[face][2][1].getColorInt() == 0) {
 						theCube.turn(face, false);
-						theCube.turn(1, true);						
+						theCube.turn(1, true);
 						theCube.turn(face, true);
-					} 
+					}
 
 				} else if (face == 3) { // Orange Face
 					// Check for white on right edge
 					if (tempFace[face][1][0].getColorInt() == 0) {
 						if (openWhite(theCube, 1, 2)) theCube.turn(2, true);
-					} 
+					}
 					// Check for white on left edge
 					else if (tempFace[face][1][2].getColorInt() == 0) {
 						if (openWhite(theCube, 1, 0)) theCube.turn(4, false);
 					} // Check for white on top edge
 					else if (tempFace[face][0][1].getColorInt() == 0) {
 						theCube.turn(face, true);
-						theCube.turn(2, true);						
+						theCube.turn(2, true);
 						theCube.turn(face, false);
 					} // Check for white on bottom edge
 					else if (tempFace[face][2][1].getColorInt() == 0) {
 						theCube.turn(face, false);
-						theCube.turn(2, true);						
+						theCube.turn(2, true);
 						theCube.turn(face, true);
 					}
 				} else if (face == 4) { // Green Face
 					// Check for white on right edge
 					if (tempFace[face][1][0].getColorInt() == 0) {
 						if (openWhite(theCube, 0, 1)) theCube.turn(3, true);
-					} 
+					}
 					// Check for white on left edge
 					else if (tempFace[face][1][2].getColorInt() == 0) {
 						if (openWhite(theCube, 2, 1)) theCube.turn(1, false);
 					} // Check for white on top edge
 					else if (tempFace[face][0][1].getColorInt() == 0) {
 						theCube.turn(face, true);
-						theCube.turn(3, true);						
+						theCube.turn(3, true);
 						theCube.turn(face, false);
 					} // Check for white on bottom edge
 					else if (tempFace[face][2][1].getColorInt() == 0) {
 						theCube.turn(face, false);
-						theCube.turn(3, true);						
+						theCube.turn(3, true);
 						theCube.turn(face, true);
-					} 
+					}
 				}  else if (face == 5) { // Yellow Face
 					if (tempFace[5][0][1].getColorInt() == 0) {
 						if (openWhite(theCube, 2, 1)) {
@@ -119,17 +127,17 @@ public class CubeSolver {
 						}
 					}
 					impossibleCount++;
-				} 
-			} 
+				}
+			}
 		}
 	}
 
 	public static void cleanWhiteCross(Cube theCube) {
 		int impossibleCount = 0;
 		Face[][][]  tempFaces = theCube.getFaces();
-		while (!(tempFaces[1][0][1].getColorInt() == 1 
+		while (!(tempFaces[1][0][1].getColorInt() == 1
 			&& tempFaces[2][0][1].getColorInt() == 2
-			&& tempFaces[3][0][1].getColorInt() == 3 
+			&& tempFaces[3][0][1].getColorInt() == 3
 			&& tempFaces[4][0][1].getColorInt() == 4)) {
 			if (impossibleCount == 50) {
 				System.out.println("cleanWhiteCross() -- FAIL");
@@ -150,7 +158,7 @@ public class CubeSolver {
 			}
 			else if (tempFaces[1][0][1].getColorInt() == 1 && tempFaces[3][0][1].getColorInt() == 3) {
 				flipWhites(theCube, 2, 4);
-			}	
+			}
 			else if (tempFaces[2][0][1].getColorInt() == 2 && tempFaces[4][0][1].getColorInt() == 4) {
 				flipWhites(theCube, 1, 3);
 			} else theCube.turn(0, false);
@@ -186,7 +194,7 @@ public class CubeSolver {
 						return;
 					}
 				}
-			} 
+			}
 			// Checking Blue/Orange/White for misoriented corner
 			else if (checkTopCorner(tempFaces, 2, 3, 0, 2, 3, 0) && tempFaces[0][0][2].getColorInt() != 0) {
 				while (tempFaces[0][0][2].getColorInt() != 0) {
@@ -196,7 +204,7 @@ public class CubeSolver {
 						return;
 					}
 				}
-			} 
+			}
 			// Checking Orange/Green/White for misoriented corner
 			else if (checkTopCorner(tempFaces, 3, 4, 0, 3, 4, 0) && tempFaces[0][0][0].getColorInt() != 0) {
 				while (tempFaces[0][0][0].getColorInt() != 0) {
@@ -206,7 +214,7 @@ public class CubeSolver {
 						return;
 					}
 				}
-			} 
+			}
 			// Checking Green/Red/White for misoriented corner
 			else if (checkTopCorner(tempFaces, 4, 1, 0, 4, 1, 0) && tempFaces[0][2][0].getColorInt() != 0) {
 				while (tempFaces[0][2][0].getColorInt() != 0) {
@@ -266,7 +274,7 @@ public class CubeSolver {
 			}
 
 
-		// Check for corners in the wrong socket that contain white 
+		// Check for corners in the wrong socket that contain white
 		//		- Corner rotation once
 
 			// Checking to Red/Blue/White corner for invalid corner
@@ -321,25 +329,25 @@ public class CubeSolver {
 			if (tempFaces[1][2][1].getColorInt() == 1 && bottomCenterEdgeMatch(tempFaces, 1, 4, 2)) {
 				if (tempFaces[5][0][1].getColorInt() == 4) bottomCenterToLeft(theCube, 1);
 				else if (tempFaces[5][0][1].getColorInt() == 2) bottomCenterToRight(theCube, 1);
-			} 
+			}
 
 			else if (tempFaces[2][2][1].getColorInt() == 2 && bottomCenterEdgeMatch(tempFaces, 2, 1, 3)) {
 				if (tempFaces[5][1][2].getColorInt() == 1) bottomCenterToLeft(theCube, 2);
 				else if (tempFaces[5][1][2].getColorInt() == 3) bottomCenterToRight(theCube, 2);
-			} 
+			}
 
 			else if (tempFaces[3][2][1].getColorInt() == 3 && bottomCenterEdgeMatch(tempFaces, 3, 2, 4)) {
 				if (tempFaces[5][2][1].getColorInt() == 2) bottomCenterToLeft(theCube, 3);
 				else if (tempFaces[5][2][1].getColorInt() == 4) bottomCenterToRight(theCube, 3);
-			} 
+			}
 
 			else if (tempFaces[4][2][1].getColorInt() == 4 && bottomCenterEdgeMatch(tempFaces, 4, 3, 1)) {
 				if (tempFaces[5][1][0].getColorInt() == 3) bottomCenterToLeft(theCube, 4);
 				else if (tempFaces[5][1][0].getColorInt() == 1) bottomCenterToRight(theCube, 4);
-			} 
+			}
 
 
-			
+
 
 			// If no possible piece exists on the bottom
 			else if((tempFaces[1][2][1].getColorInt() == 5 || tempFaces[5][0][1].getColorInt() == 5)
@@ -386,7 +394,7 @@ public class CubeSolver {
 			if (tempFaces[5][0][1].getColorInt() != 5 && tempFaces[5][1][0].getColorInt() != 5
 				&& tempFaces[5][1][2].getColorInt() != 5 && tempFaces[5][2][1].getColorInt() != 5) {
 				yellowCrossAlgorithm(theCube);
-			} 
+			}
 
 			// Check if there is a yellow V
 
@@ -411,9 +419,9 @@ public class CubeSolver {
 	public static void cleanYellowCross(Cube theCube) {
 		int impossibleCount = 0;
 		Face[][][]  tempFaces = theCube.getFaces();
-		while (tempFaces[1][2][1].getColorInt() != 1 
+		while (tempFaces[1][2][1].getColorInt() != 1
 			|| tempFaces[2][2][1].getColorInt() != 2
-			|| tempFaces[3][2][1].getColorInt() != 3 
+			|| tempFaces[3][2][1].getColorInt() != 3
 			|| tempFaces[4][2][1].getColorInt() != 4) {
 
 			if (impossibleCount == 50) {
@@ -470,9 +478,9 @@ public class CubeSolver {
 
 		Face[][][] theFaces = theCube.getFaces();
 		// Loop while all sockets are not satisfied
-		while (!(checkBottomCorner(theFaces, 1, 2, 5, 1, 2, 5) 
-				&& checkBottomCorner(theFaces, 2, 3, 5, 2, 3, 5) 
-				&& checkBottomCorner(theFaces, 3, 4, 5, 3, 4, 5) 
+		while (!(checkBottomCorner(theFaces, 1, 2, 5, 1, 2, 5)
+				&& checkBottomCorner(theFaces, 2, 3, 5, 2, 3, 5)
+				&& checkBottomCorner(theFaces, 3, 4, 5, 3, 4, 5)
 				&& checkBottomCorner(theFaces, 4, 1, 5, 4, 1, 5))) {
 
 				if (impossibleCount == 50) {
@@ -515,7 +523,6 @@ public class CubeSolver {
 			impossibleCount++;
 		}
 	}
-
 
 	// orient the final corners
 	public static void orientFinalCorners(Cube theCube) {
@@ -631,18 +638,18 @@ public class CubeSolver {
 
 	private static boolean bottomCenterEdgeMatch(Face[][][] theFaces, int theF, int color1, int color2) {
 		if (theF == 1) {
-			return (theFaces[5][0][1].getColorInt() == color1 
+			return (theFaces[5][0][1].getColorInt() == color1
 			|| theFaces[5][0][1].getColorInt() == color2);
 		} else if (theF == 2) {
-			return (theFaces[5][1][2].getColorInt() == color1 
+			return (theFaces[5][1][2].getColorInt() == color1
 			|| theFaces[5][1][2].getColorInt() == color2);
 		} else if (theF == 3) {
-			return (theFaces[5][2][1].getColorInt() == color1 
+			return (theFaces[5][2][1].getColorInt() == color1
 			|| theFaces[5][2][1].getColorInt() == color2);
 		} else if (theF == 4) {
-			return (theFaces[5][1][0].getColorInt() == color1 
+			return (theFaces[5][1][0].getColorInt() == color1
 			|| theFaces[5][1][0].getColorInt() == color2);
-		} 
+		}
 		return false;
 	}
 
@@ -718,7 +725,7 @@ public class CubeSolver {
 			if (impossibleCount++ == 50) {
 				System.out.println("solveLayerTwoEdges() -- FAIL");
 				return;
-			}	
+			}
 		}
 		theCube.turn(theColor1, false);
 		theCube.turn(theColor1, false);
@@ -727,11 +734,11 @@ public class CubeSolver {
 	private static boolean openWhite(Cube theCube, int i, int j) {
 		Face[][][] tempFace;
 		for (int count = 0; count < 4; count++) {
-			tempFace = theCube.getFaces(); 
+			tempFace = theCube.getFaces();
 			if (tempFace[0][i][j].getColorInt() != 0) return true;
 			else {
 				theCube.turn(0, false);
-			} 	
+			}
 		}
 		return false;
 
@@ -747,20 +754,20 @@ public class CubeSolver {
 	// Checks to see if a corner contains white
 	private static boolean topRightContainsWhite(Face[][][] theFaces, int theF) {
 		if (theF == 1) {
-			return theFaces[1][0][2].getColorInt() == 0 
-			|| theFaces[2][0][0].getColorInt() == 0 
+			return theFaces[1][0][2].getColorInt() == 0
+			|| theFaces[2][0][0].getColorInt() == 0
 			|| theFaces[0][2][2].getColorInt() == 0;
 		} else if (theF == 2) {
-			return theFaces[2][0][2].getColorInt() == 0 
-			|| theFaces[3][0][0].getColorInt() == 0 
+			return theFaces[2][0][2].getColorInt() == 0
+			|| theFaces[3][0][0].getColorInt() == 0
 			|| theFaces[0][0][2].getColorInt() == 0;
 		} else if (theF == 3) {
-			return theFaces[3][0][2].getColorInt() == 0 
-			|| theFaces[4][0][0].getColorInt() == 0 
+			return theFaces[3][0][2].getColorInt() == 0
+			|| theFaces[4][0][0].getColorInt() == 0
 			|| theFaces[0][0][0].getColorInt() == 0;
 		} else if (theF == 2) {
-			return theFaces[4][0][2].getColorInt() == 0 
-			|| theFaces[1][0][0].getColorInt() == 0 
+			return theFaces[4][0][2].getColorInt() == 0
+			|| theFaces[1][0][0].getColorInt() == 0
 			|| theFaces[0][2][0].getColorInt() == 0;
 		}
 		return false;
@@ -769,44 +776,44 @@ public class CubeSolver {
 	// Checks the top right corner of the front face
 	private static boolean checkTopCorner(Face[][][] theFaces, int theF, int theR, int theT, int theColor1, int theColor2, int theColor3) {
 		if (theF == 1 && theT == 0) {
-			return (theFaces[theF][0][2].getColorInt() == theColor1 
-				|| theFaces[theF][0][2].getColorInt() == theColor2 
+			return (theFaces[theF][0][2].getColorInt() == theColor1
+				|| theFaces[theF][0][2].getColorInt() == theColor2
 				|| theFaces[theF][0][2].getColorInt() == theColor3)
-			&& (theFaces[theR][0][0].getColorInt() == theColor1 
-				|| theFaces[theR][0][0].getColorInt() == theColor2 
+			&& (theFaces[theR][0][0].getColorInt() == theColor1
+				|| theFaces[theR][0][0].getColorInt() == theColor2
 				|| theFaces[theR][0][0].getColorInt() == theColor3)
-			&& (theFaces[theT][2][2].getColorInt() == theColor1 
-				|| theFaces[theT][2][2].getColorInt() == theColor2 
+			&& (theFaces[theT][2][2].getColorInt() == theColor1
+				|| theFaces[theT][2][2].getColorInt() == theColor2
 				|| theFaces[theT][2][2].getColorInt() == theColor3);
 		} else if (theF == 2 && theT == 0) {
-			return (theFaces[theF][0][2].getColorInt() == theColor1 
-				|| theFaces[theF][0][2].getColorInt() == theColor2 
+			return (theFaces[theF][0][2].getColorInt() == theColor1
+				|| theFaces[theF][0][2].getColorInt() == theColor2
 				|| theFaces[theF][0][2].getColorInt() == theColor3)
-			&& (theFaces[theR][0][0].getColorInt() == theColor1 
-				|| theFaces[theR][0][0].getColorInt() == theColor2 
+			&& (theFaces[theR][0][0].getColorInt() == theColor1
+				|| theFaces[theR][0][0].getColorInt() == theColor2
 				|| theFaces[theR][0][0].getColorInt() == theColor3)
-			&& (theFaces[theT][0][2].getColorInt() == theColor1 
-				|| theFaces[theT][0][2].getColorInt() == theColor2 
+			&& (theFaces[theT][0][2].getColorInt() == theColor1
+				|| theFaces[theT][0][2].getColorInt() == theColor2
 				|| theFaces[theT][0][2].getColorInt() == theColor3);
 		} else if (theF == 3 && theT == 0) {
-			return (theFaces[theF][0][2].getColorInt() == theColor1 
-				|| theFaces[theF][0][2].getColorInt() == theColor2 
+			return (theFaces[theF][0][2].getColorInt() == theColor1
+				|| theFaces[theF][0][2].getColorInt() == theColor2
 				|| theFaces[theF][0][2].getColorInt() == theColor3)
-			&& (theFaces[theR][0][0].getColorInt() == theColor1 
-				|| theFaces[theR][0][0].getColorInt() == theColor2 
+			&& (theFaces[theR][0][0].getColorInt() == theColor1
+				|| theFaces[theR][0][0].getColorInt() == theColor2
 				|| theFaces[theR][0][0].getColorInt() == theColor3)
-			&& (theFaces[theT][0][0].getColorInt() == theColor1 
-				|| theFaces[theT][0][0].getColorInt() == theColor2 
+			&& (theFaces[theT][0][0].getColorInt() == theColor1
+				|| theFaces[theT][0][0].getColorInt() == theColor2
 				|| theFaces[theT][0][0].getColorInt() == theColor3);
 		} else if (theF == 4 && theT == 0) {
-			return (theFaces[theF][0][2].getColorInt() == theColor1 
-				|| theFaces[theF][0][2].getColorInt() == theColor2 
+			return (theFaces[theF][0][2].getColorInt() == theColor1
+				|| theFaces[theF][0][2].getColorInt() == theColor2
 				|| theFaces[theF][0][2].getColorInt() == theColor3)
-			&& (theFaces[theR][0][0].getColorInt() == theColor1 
-				|| theFaces[theR][0][0].getColorInt() == theColor2 
+			&& (theFaces[theR][0][0].getColorInt() == theColor1
+				|| theFaces[theR][0][0].getColorInt() == theColor2
 				|| theFaces[theR][0][0].getColorInt() == theColor3)
-			&& (theFaces[theT][2][0].getColorInt() == theColor1 
-				|| theFaces[theT][2][0].getColorInt() == theColor2 
+			&& (theFaces[theT][2][0].getColorInt() == theColor1
+				|| theFaces[theT][2][0].getColorInt() == theColor2
 				|| theFaces[theT][2][0].getColorInt() == theColor3);
 		}
 		return false;
@@ -815,44 +822,44 @@ public class CubeSolver {
 	// Checks the bottom right corner of the front face
 	private static boolean checkBottomCorner(Face[][][] theFaces, int theF, int theR, int theD, int theColor1, int theColor2, int theColor3) {
 		if (theF == 1 && theD == 5) {
-			return (theFaces[theF][2][2].getColorInt() == theColor1 
-				|| theFaces[theF][2][2].getColorInt() == theColor2 
+			return (theFaces[theF][2][2].getColorInt() == theColor1
+				|| theFaces[theF][2][2].getColorInt() == theColor2
 				|| theFaces[theF][2][2].getColorInt() == theColor3)
-			&& (theFaces[theR][2][0].getColorInt() == theColor1 
-				|| theFaces[theR][2][0].getColorInt() == theColor2 
+			&& (theFaces[theR][2][0].getColorInt() == theColor1
+				|| theFaces[theR][2][0].getColorInt() == theColor2
 				|| theFaces[theR][2][0].getColorInt() == theColor3)
-			&& (theFaces[theD][0][2].getColorInt() == theColor1 
-				|| theFaces[theD][0][2].getColorInt() == theColor2 
+			&& (theFaces[theD][0][2].getColorInt() == theColor1
+				|| theFaces[theD][0][2].getColorInt() == theColor2
 				|| theFaces[theD][0][2].getColorInt() == theColor3);
 		} else if (theF == 2 && theD == 5) {
-			return (theFaces[theF][2][2].getColorInt() == theColor1 
-				|| theFaces[theF][2][2].getColorInt() == theColor2 
+			return (theFaces[theF][2][2].getColorInt() == theColor1
+				|| theFaces[theF][2][2].getColorInt() == theColor2
 				|| theFaces[theF][2][2].getColorInt() == theColor3)
-			&& (theFaces[theR][2][0].getColorInt() == theColor1 
-				|| theFaces[theR][2][0].getColorInt() == theColor2 
+			&& (theFaces[theR][2][0].getColorInt() == theColor1
+				|| theFaces[theR][2][0].getColorInt() == theColor2
 				|| theFaces[theR][2][0].getColorInt() == theColor3)
-			&& (theFaces[theD][2][2].getColorInt() == theColor1 
-				|| theFaces[theD][2][2].getColorInt() == theColor2 
+			&& (theFaces[theD][2][2].getColorInt() == theColor1
+				|| theFaces[theD][2][2].getColorInt() == theColor2
 				|| theFaces[theD][2][2].getColorInt() == theColor3);
 		} else if (theF == 3 && theD == 5) {
-			return (theFaces[theF][2][2].getColorInt() == theColor1 
-				|| theFaces[theF][2][2].getColorInt() == theColor2 
+			return (theFaces[theF][2][2].getColorInt() == theColor1
+				|| theFaces[theF][2][2].getColorInt() == theColor2
 				|| theFaces[theF][2][2].getColorInt() == theColor3)
-			&& (theFaces[theR][2][0].getColorInt() == theColor1 
-				|| theFaces[theR][2][0].getColorInt() == theColor2 
+			&& (theFaces[theR][2][0].getColorInt() == theColor1
+				|| theFaces[theR][2][0].getColorInt() == theColor2
 				|| theFaces[theR][2][0].getColorInt() == theColor3)
-			&& (theFaces[theD][2][0].getColorInt() == theColor1 
-				|| theFaces[theD][2][0].getColorInt() == theColor2 
+			&& (theFaces[theD][2][0].getColorInt() == theColor1
+				|| theFaces[theD][2][0].getColorInt() == theColor2
 				|| theFaces[theD][2][0].getColorInt() == theColor3);
 		} else if (theF == 4 && theD == 5) {
-			return (theFaces[theF][2][2].getColorInt() == theColor1 
-				|| theFaces[theF][2][2].getColorInt() == theColor2 
+			return (theFaces[theF][2][2].getColorInt() == theColor1
+				|| theFaces[theF][2][2].getColorInt() == theColor2
 				|| theFaces[theF][2][2].getColorInt() == theColor3)
-			&& (theFaces[theR][2][0].getColorInt() == theColor1 
-				|| theFaces[theR][2][0].getColorInt() == theColor2 
+			&& (theFaces[theR][2][0].getColorInt() == theColor1
+				|| theFaces[theR][2][0].getColorInt() == theColor2
 				|| theFaces[theR][2][0].getColorInt() == theColor3)
-			&& (theFaces[theD][0][0].getColorInt() == theColor1 
-				|| theFaces[theD][0][0].getColorInt() == theColor2 
+			&& (theFaces[theD][0][0].getColorInt() == theColor1
+				|| theFaces[theD][0][0].getColorInt() == theColor2
 				|| theFaces[theD][0][0].getColorInt() == theColor3);
 		}
 		return false;
@@ -868,6 +875,6 @@ public class CubeSolver {
 			}
 			System.out.println();
 		}
-		
+
 	}
 }

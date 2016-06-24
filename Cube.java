@@ -1,3 +1,11 @@
+/**
+* Cube object that can be manipulated.
+*
+* @author  Edgardo Gutierrez Jr.
+* @version 1.0
+* @since   2015-11-19
+*/
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Arrays;
@@ -5,8 +13,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.awt.GradientPaint;
 
-
-//                 
+//
 //                  [BACK]
 //                    |
 //              (2)___|_______(3)
@@ -20,13 +27,12 @@ import java.awt.GradientPaint;
 //                \|            \|
 //                (4)_^_________(5)
 //                    |
-//                    |    
+//                    |
 //	               [BOTTOM]
 //
 
 public class Cube {
 	private int myRadius = 99;
-
 	private Point3D[][][] myPoints;
 	private Face[][][] myFaces;
 	private int myWidth;
@@ -37,7 +43,7 @@ public class Cube {
 	private LinkedList<String> myMoves;
 	private boolean mySmall;
 	private Cube mySmallCube;
-	
+
 	public Cube(int theWidth, int theHeight, double theStep, int theScale, int theDimensions, boolean theSmall) {
 		mySmall = theSmall;
 		myWidth = theWidth;
@@ -59,22 +65,22 @@ public class Cube {
 			rotateUp();
 			// rotateClockwise();
 
-		} 
+		}
 		myStep = theStep;
 
 	}
-	
+
 	private void setFaces() {
 		int x = 0, y = 0;
-		Color[] color = {Color.WHITE, Color.RED, new Color(71, 117, 255), 
+		Color[] color = {Color.WHITE, Color.RED, new Color(71, 117, 255),
 				new Color(255, 88, 0), new Color(0, 173, 0), Color.YELLOW};
 		for (int face = 0; face < 6; face++) {
 			y = 0;
 			for (int i = 0; i < myDimensions; i++) {
 				for (int j = 0; j < myDimensions; j++) {
-					Point3D[] tempPoints = {myPoints[face][y][x], myPoints[face][y][x + 1],  
+					Point3D[] tempPoints = {myPoints[face][y][x], myPoints[face][y][x + 1],
 							myPoints[face][y + 1][x + 1],  myPoints[face][y + 1][x]};
-							x += 2; 
+							x += 2;
 					myFaces[face][i][j] = new Face(color[face], tempPoints, myWidth, myHeight, myScale);
 				}
 				x = 0;
@@ -86,12 +92,12 @@ public class Cube {
 	private void setFaces(Face[][][] theFaces) {
 		myFaces = theFaces;
 	}
-	
+
 	private void setPoints() {
 		int x = 0, y = 0, z = 0;
 		for (int face = 0; face < 6; face++) {
 			if (face == 0) {        // WHITE(X,Z)
-				x = -myRadius; 
+				x = -myRadius;
 				y = myRadius;
 				z = -myRadius;
 			} else if (face == 1) { // RED(X,Y)
@@ -114,21 +120,21 @@ public class Cube {
 				x = -myRadius;
 				y = -myRadius;
 				z = myRadius;
-			} 
-			
+			}
+
 			for (int i = 0; i < 2 * myDimensions; i++) {
 				for (int j = 0; j < 2 * myDimensions; j++) {
 					myPoints[face][i][j] = new Point3D(x, y, z);
-					if (j % 2 == 0) { 
-						if (face == 0) x += (2 * myRadius) / myDimensions; 
-						else if (face == 1) x += (2 * myRadius) / myDimensions; 
-						else if (face == 2) z -= (2 * myRadius) / myDimensions; 
-						else if (face == 3) x -= (2 * myRadius) / myDimensions; 
-						else if (face == 4) z += (2 * myRadius) / myDimensions; 
-						else if (face == 5) x += (2 * myRadius) / myDimensions; 
-					} 
+					if (j % 2 == 0) {
+						if (face == 0) x += (2 * myRadius) / myDimensions;
+						else if (face == 1) x += (2 * myRadius) / myDimensions;
+						else if (face == 2) z -= (2 * myRadius) / myDimensions;
+						else if (face == 3) x -= (2 * myRadius) / myDimensions;
+						else if (face == 4) z += (2 * myRadius) / myDimensions;
+						else if (face == 5) x += (2 * myRadius) / myDimensions;
+					}
 				}
-				
+
 				if (face == 0) {
 					x = -myRadius; // Reset x for every new z value.
 					if (i % 2 == 0) z += (2 * myRadius) / myDimensions;
@@ -151,7 +157,7 @@ public class Cube {
 			}
 		}
 	}
-	
+
 	public void rotateRight() {
 		if (!mySmall) mySmallCube.rotateRight();
 		for (int face = 0; face < 6; face++) {
@@ -167,7 +173,7 @@ public class Cube {
 		}
 
 	}
-	
+
 	public void rotateLeft() {
 		if (!mySmall) mySmallCube.rotateLeft();
 		for (int face = 0; face < 6; face++) {
@@ -182,7 +188,7 @@ public class Cube {
 			}
 		}
 	}
-	
+
 	public void rotateDown() {
 		if (!mySmall) mySmallCube.rotateDown();
 		for (int face = 0; face < 6; face++) {
@@ -197,12 +203,12 @@ public class Cube {
 			}
 		}
 	}
-	
+
 	public void rotateUp() {
 		if (!mySmall) mySmallCube.rotateUp();
 		for (int face = 0; face < 6; face++) {
 			for (int i = 0; i < myDimensions * 2; i++) {
-				for (int j = 0; j < myDimensions * 2; j++) {			
+				for (int j = 0; j < myDimensions * 2; j++) {
 					double tempY = myPoints[face][i][j].getY();
 					double tempZ = myPoints[face][i][j].getZ();
 					double radians = degreesToRadians(myStep);
@@ -212,12 +218,12 @@ public class Cube {
 			}
 		}
 	}
-	
+
 	public void rotateClockwise() {
 		if (!mySmall) mySmallCube.rotateClockwise();
 		for (int face = 0; face < 6; face++) {
 			for (int i = 0; i < myDimensions * 2; i++) {
-				for (int j = 0; j < myDimensions * 2; j++) {				
+				for (int j = 0; j < myDimensions * 2; j++) {
 					double tempY = myPoints[face][i][j].getY();
 					double tempX = myPoints[face][i][j].getX();
 					double radians = -degreesToRadians(myStep);
@@ -227,7 +233,7 @@ public class Cube {
 			}
 		}
 	}
-	
+
 	public void rotateCounterClockwise() {
 		if (!mySmall) mySmallCube.rotateCounterClockwise();
 		for (int face = 0; face < 6; face++) {
@@ -245,7 +251,7 @@ public class Cube {
 
 	public void turn(int theFace, boolean theInversion) {
 		switch(theFace) {
-			case 0: 
+			case 0:
 				if (theInversion) {
 					turnWhiteInverse();
 					myMoves.add("Wi");
@@ -254,7 +260,7 @@ public class Cube {
 					myMoves.add("W");
 				}
 				break;
-			case 1: 
+			case 1:
 				if (theInversion) {
 					turnRedInverse();
 					myMoves.add("Ri");
@@ -263,7 +269,7 @@ public class Cube {
 					myMoves.add("R");
 				}
 				break;
-			case 2: 
+			case 2:
 				if (theInversion) {
 					turnBlueInverse();
 					myMoves.add("Bi");
@@ -272,7 +278,7 @@ public class Cube {
 					myMoves.add("B");
 				}
 				break;
-			case 3: 
+			case 3:
 				if (theInversion) {
 					turnOrangeInverse();
 					myMoves.add("Oi");
@@ -281,7 +287,7 @@ public class Cube {
 					myMoves.add("O");
 				}
 				break;
-			case 4: 
+			case 4:
 				if (theInversion) {
 					turnGreenInverse();
 					myMoves.add("Gi");
@@ -290,7 +296,7 @@ public class Cube {
 					myMoves.add("G");
 				}
 				break;
-			case 5: 
+			case 5:
 				if (theInversion) {
 					myMoves.add("Yi");
 					turnYellowInverse();
@@ -310,22 +316,21 @@ public class Cube {
 		myMoves = new LinkedList<String>();
 	}
 
-	
 	public void turnRed() {
 		turnRedInverse();
 		turnRedInverse();
 		turnRedInverse();
 	}
-	
+
 	public void turnRedInverse() {
 		if (!mySmall) mySmallCube.turnRedInverse();
 		Color temp;
-		
-		turnFaceOnly(1); 
-		turnFaceOnly(1); 
-		turnFaceOnly(1); 
 
-		
+		turnFaceOnly(1);
+		turnFaceOnly(1);
+		turnFaceOnly(1);
+
+
 		temp = myFaces[0][2][0].getColor();
 		myFaces[0][2][0].setColor(myFaces[2][0][0].getColor());
 		myFaces[2][0][0].setColor(myFaces[5][0][2].getColor());
@@ -337,20 +342,20 @@ public class Cube {
 		myFaces[2][1][0].setColor(myFaces[5][0][1].getColor());
 		myFaces[5][0][1].setColor(myFaces[4][1][2].getColor());
 		myFaces[4][1][2].setColor(temp);
-		
+
 		temp = myFaces[0][2][2].getColor();
 		myFaces[0][2][2].setColor(myFaces[2][2][0].getColor());
 		myFaces[2][2][0].setColor(myFaces[5][0][0].getColor());
 		myFaces[5][0][0].setColor(myFaces[4][0][2].getColor());
 		myFaces[4][0][2].setColor(temp);
 	}
-	
+
 	public void turnBlue() {
 		if (!mySmall) mySmallCube.turnBlue();
 		Color temp;
-		
-		turnFaceOnly(2); 
-		
+
+		turnFaceOnly(2);
+
 		temp = myFaces[0][2][2].getColor();
 		myFaces[0][2][2].setColor(myFaces[1][2][2].getColor());
 		myFaces[1][2][2].setColor(myFaces[5][2][2].getColor());
@@ -362,27 +367,27 @@ public class Cube {
 		myFaces[1][1][2].setColor(myFaces[5][1][2].getColor());
 		myFaces[5][1][2].setColor(myFaces[3][1][0].getColor());
 		myFaces[3][1][0].setColor(temp);
-		
+
 		temp = myFaces[0][0][2].getColor();
 		myFaces[0][0][2].setColor(myFaces[1][0][2].getColor());
 		myFaces[1][0][2].setColor(myFaces[5][0][2].getColor());
 		myFaces[5][0][2].setColor(myFaces[3][2][0].getColor());
 		myFaces[3][2][0].setColor(temp);
 	}
-	
+
 	public void turnBlueInverse() {
 		// if (!mySmall) mySmallCube.turnBlueInverse();
 		turnBlue();
 		turnBlue();
 		turnBlue();
 	}
-	
+
 	public void turnGreen() {
 		if (!mySmall) mySmallCube.turnGreen();
 		Color temp;
-		
-		turnFaceOnly(4); 
-		
+
+		turnFaceOnly(4);
+
 		temp = myFaces[0][0][0].getColor();
 		myFaces[0][0][0].setColor(myFaces[3][2][2].getColor());
 		myFaces[3][2][2].setColor(myFaces[5][0][0].getColor());
@@ -394,27 +399,27 @@ public class Cube {
 		myFaces[3][1][2].setColor(myFaces[5][1][0].getColor());
 		myFaces[5][1][0].setColor(myFaces[1][1][0].getColor());
 		myFaces[1][1][0].setColor(temp);
-		
+
 		temp = myFaces[0][2][0].getColor();
 		myFaces[0][2][0].setColor(myFaces[3][0][2].getColor());
 		myFaces[3][0][2].setColor(myFaces[5][2][0].getColor());
 		myFaces[5][2][0].setColor(myFaces[1][2][0].getColor());
 		myFaces[1][2][0].setColor(temp);
 	}
-	
+
 	public void turnGreenInverse() {
 		// if (!mySmall) mySmallCube.turnGreenInverse();
 		turnGreen();
 		turnGreen();
 		turnGreen();
 	}
-	
+
 	public void turnOrange() {
 		if (!mySmall) mySmallCube.turnOrange();
 		Color temp;
-		
-		turnFaceOnly(3); 
-		
+
+		turnFaceOnly(3);
+
 		temp = myFaces[0][0][2].getColor();
 		myFaces[0][0][2].setColor(myFaces[2][2][2].getColor());
 		myFaces[2][2][2].setColor(myFaces[5][2][0].getColor());
@@ -426,28 +431,28 @@ public class Cube {
 		myFaces[2][1][2].setColor(myFaces[5][2][1].getColor());
 		myFaces[5][2][1].setColor(myFaces[4][1][0].getColor());
 		myFaces[4][1][0].setColor(temp);
-		
+
 		temp = myFaces[0][0][0].getColor();
 		myFaces[0][0][0].setColor(myFaces[2][0][2].getColor());
 		myFaces[2][0][2].setColor(myFaces[5][2][2].getColor());
 		myFaces[5][2][2].setColor(myFaces[4][2][0].getColor());
 		myFaces[4][2][0].setColor(temp);
 	}
-	
+
 	public void turnOrangeInverse() {
 		// if (!mySmall) mySmallCube.turnOrangeInverse();
 		turnOrange();
 		turnOrange();
 		turnOrange();
-	}	
-	
+	}
+
 	public void turnWhite() {
 		if (!mySmall) mySmallCube.turnWhite();
 
 		Color temp;
-		
+
 		turnFaceOnly(0);
-		
+
 		temp = myFaces[1][0][0].getColor();
 		myFaces[1][0][0].setColor(myFaces[2][0][0].getColor());
 		myFaces[2][0][0].setColor(myFaces[3][0][0].getColor());
@@ -459,27 +464,27 @@ public class Cube {
 		myFaces[2][0][1].setColor(myFaces[3][0][1].getColor());
 		myFaces[3][0][1].setColor(myFaces[4][0][1].getColor());
 		myFaces[4][0][1].setColor(temp);
-		
+
 		temp = myFaces[1][0][2].getColor();
 		myFaces[1][0][2].setColor(myFaces[2][0][2].getColor());
 		myFaces[2][0][2].setColor(myFaces[3][0][2].getColor());
 		myFaces[3][0][2].setColor(myFaces[4][0][2].getColor());
 		myFaces[4][0][2].setColor(temp);
 	}
-	
+
 	public void turnWhiteInverse() {
 		// if (!mySmall) mySmallCube.turnWhiteInverse();
 		turnWhite();
 		turnWhite();
 		turnWhite();
 	}
-	
+
 	public void turnYellow() {
 		if (!mySmall) mySmallCube.turnYellow();
 		Color temp;
-		
-		turnFaceOnly(5); 
-		
+
+		turnFaceOnly(5);
+
 		temp = myFaces[1][2][2].getColor();
 		myFaces[1][2][2].setColor(myFaces[4][2][2].getColor());
 		myFaces[4][2][2].setColor(myFaces[3][2][2].getColor());
@@ -491,14 +496,14 @@ public class Cube {
 		myFaces[4][2][1].setColor(myFaces[3][2][1].getColor());
 		myFaces[3][2][1].setColor(myFaces[2][2][1].getColor());
 		myFaces[2][2][1].setColor(temp);
-		
+
 		temp = myFaces[1][2][0].getColor();
 		myFaces[1][2][0].setColor(myFaces[4][2][0].getColor());
 		myFaces[4][2][0].setColor(myFaces[3][2][0].getColor());
 		myFaces[3][2][0].setColor(myFaces[2][2][0].getColor());
 		myFaces[2][2][0].setColor(temp);
 	}
-	
+
 	public void turnYellowInverse() {
 		// if (!mySmall) mySmallCube.turnYellowInverse();
 		turnYellow();
@@ -516,7 +521,7 @@ public class Cube {
 		}
 		resetMoves();
 	}
-	
+
 	public void setStep(double theStep) {
 		if (!mySmall) mySmallCube.setStep(theStep);
 		myStep = theStep;
@@ -525,23 +530,23 @@ public class Cube {
 	private double degreesToRadians(double theDegrees) {
 		return theDegrees * Math.PI / 180;
 	}
-	
+
 	private void turnFaceOnly(int theFace) {
 
 		Color temp;
 		temp = myFaces[theFace][0][0].getColor();
-		myFaces[theFace][0][0].setColor(myFaces[theFace][2][0].getColor()); 
-		myFaces[theFace][2][0].setColor(myFaces[theFace][2][2].getColor()); 
-		myFaces[theFace][2][2].setColor(myFaces[theFace][0][2].getColor()); 
-		myFaces[theFace][0][2].setColor(temp); 
-		
+		myFaces[theFace][0][0].setColor(myFaces[theFace][2][0].getColor());
+		myFaces[theFace][2][0].setColor(myFaces[theFace][2][2].getColor());
+		myFaces[theFace][2][2].setColor(myFaces[theFace][0][2].getColor());
+		myFaces[theFace][0][2].setColor(temp);
+
 		temp = myFaces[theFace][0][1].getColor();
-		myFaces[theFace][0][1].setColor(myFaces[theFace][1][0].getColor()); 
-		myFaces[theFace][1][0].setColor(myFaces[theFace][2][1].getColor()); 
-		myFaces[theFace][2][1].setColor(myFaces[theFace][1][2].getColor()); 
+		myFaces[theFace][0][1].setColor(myFaces[theFace][1][0].getColor());
+		myFaces[theFace][1][0].setColor(myFaces[theFace][2][1].getColor());
+		myFaces[theFace][2][1].setColor(myFaces[theFace][1][2].getColor());
 		myFaces[theFace][1][2].setColor(temp);
 	}
-	
+
 	public void click(int theX, int theY) {
 		Face closestFace = null;
 		int closestI = 2, closestJ = 2, closestF = 2;
@@ -572,7 +577,7 @@ public class Cube {
 			temp[closestF][closestI][closestJ].select();
 		}
 	}
-	
+
 	public void scale(String theScaling) {
 		if (!mySmall) mySmallCube.scale(theScaling);
 		for (int face = 0; face < 6; face++) {
@@ -602,9 +607,9 @@ public class Cube {
 		}
 		return 100 * total / 54;
 	}
-	
+
 	public void draw(Graphics2D g) {
-		
+
 
 		Face[] sortedFaces = new Face[6 * myDimensions * myDimensions];
 		int index = 0;
@@ -615,7 +620,7 @@ public class Cube {
 				}
 			}
 		}
-					
+
 		Arrays.sort(sortedFaces);
 
 		for (Face face : sortedFaces) {

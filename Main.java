@@ -1,3 +1,11 @@
+/**
+* Runs the execution loop.
+*
+* @author  Edgardo Gutierrez Jr.
+* @version 1.0
+* @since   2015-11-19
+*/
+
 import javax.swing.JFrame;
 
 public class Main {
